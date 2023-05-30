@@ -1,0 +1,67 @@
+// Obtém o elemento do calendário
+var calendar = document.getElementById('calendar');
+
+// Cria um objeto de data
+var date = new Date();
+
+// Renderiza o calendário
+function renderCalendar() 
+  // Define o cabeçalho do calendário
+  var calendarHTML = '<table>' +
+    '<tr>' +
+    '<th>Domingo</th>' +
+    '<th>Segunda-feira</th>' +
+    '<th>Terça-feira</th>' +
+    '<th>Quarta-feira</th>' +
+    '<th>Quinta-feira</th>' +
+    '<th>Sexta-feira</th>' +
+    '<th>Sábado</th>' +
+    '</tr>';
+
+  // Obtém o primeiro dia do mês
+  var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+
+  // Obtém o número de dias no mês
+  var daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+  // Calcula o deslocamento para o primeiro dia
+  var dayOffset = firstDay.getDay();
+
+  // Cria as células para os dias
+  var day = 1;
+  for (var i = 0; i < 6; i++) {
+    calendarHTML += '<tr>';
+    for (var j = 0; j < 7; j++) {
+      if (i === 0 && j < dayOffset) {
+        calendarHTML += '<td></td>';
+      } else if (day > daysInMonth) {
+        break;
+      } else {
+        var classToday = '';
+        if (date.getDate() === day && date.getMonth() === new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) {
+          classToday = 'today';
+        }
+        calendarHTML += '<td class="' + classToday + '">' + day + '</td>';
+        day++;
+      }
+    }
+    calendarHTML += '</tr>';
+    if (day > daysInMonth) {
+      break;
+    }
+  }
+
+  calendarHTML += '</table>';
+
+  // Atualiza o elemento do calendário com o HTML gerado
+  calendar.innerHTML = calendarHTML;
+
+  // Adiciona eventos de clique nas células dos dias
+  var cells = calendar.getElementsByTagName('td');
+for (var k = 0; k < cells.length; k++) 
+    cells[k].addEventListener'click', function() 
+      var selected = document.getElementsByClassName('selected');
+      for (var l = 0; l < selected.length; l++) {
+        selected[l].classList.remove('selected');
+      }
+      this.classList.add('selected');
